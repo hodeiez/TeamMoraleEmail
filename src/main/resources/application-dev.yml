@@ -1,6 +1,15 @@
+twillio:
+  api:
+    key: ${TWILLIO_API_KEY}
+  from: ${TWILLIO_FROM_EMAIL}
+  templates:
+    signup: ${TWILLIO_TEMPLATE_1}
 spring:
   redis:
     host: ${REDIS_HOST}
     port: ${REDIS_PORT}
 server:
   port: ${SERVER_PORT}
+client:
+  base:
+    url: ${CLIENT_BASE_URL}
