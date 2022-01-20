@@ -33,7 +33,7 @@ public class SubscriberService {
         this.reactiveRedisTemplate
                 .listenTo(ChannelTopic.of(topic))
                 .map(ReactiveSubscription.Message::getMessage)
-                .subscribe(System.out::println);
+                .subscribe(m-> System.out.println(m.getMessage()+" for "+ m.getUsername()));
     }
 
 }
