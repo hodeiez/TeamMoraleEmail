@@ -1,5 +1,6 @@
 package hodei.naiz.teammoraleemail.services.subscriber;
 
+import com.sendgrid.helpers.mail.Mail;
 import hodei.naiz.teammoraleemail.config.MailProperties;
 import hodei.naiz.teammoraleemail.services.email.EmailSender;
 import hodei.naiz.teammoraleemail.services.email.MailHelper;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+
+import static java.lang.String.valueOf;
 
 /**
  * Created by Hodei Eceiza
@@ -31,9 +34,10 @@ public class SubscriberService {
     @Value("${topic.name:email-notification}")
     private String topic;
 
-    public SubscriberService(EmailSender emailSender, MailProperties mailProperties,  ReactiveRedisOperations<String, EmailServiceMessage> reactiveRedisTemplate) {
+    public SubscriberService(EmailSender emailSender, MailProperties mailProperties, ReactiveRedisOperations<String, EmailServiceMessage> reactiveRedisTemplate) {
         this.emailSender = emailSender;
         this.mailProperties = mailProperties;
+        this.mailHelper = new MailHelper();
 
         this.reactiveRedisTemplate = reactiveRedisTemplate;
     }
@@ -45,11 +49,20 @@ public class SubscriberService {
                 .map(ReactiveSubscription.Message::getMessage)
                 .subscribe(m-> {
                     try {
-                        System.out.println(emailSender.send(new SendgridMail(mailProperties,new MailHelper()).sendMail(m)) + " " + m.toString());
+                        actionSelector(m.getEmailType(),m);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 });
+    }
+    private String actionSelector(String type,EmailServiceMessage m) throws IOException {
+        switch(type){
+            case "Signed up"-> {emailSender.send(SendgridMail.forSignedUp().mailProperties(mailProperties).mailHelper(mailHelper).email(m).build().getMail()); return "sent";}
+            case "added to team" -> throw new IOException();
+            default -> {
+                return "failed";
+            }
+        }
     }
 
 }
