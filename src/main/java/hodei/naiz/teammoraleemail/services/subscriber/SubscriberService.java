@@ -49,16 +49,17 @@ public class SubscriberService {
                 .map(ReactiveSubscription.Message::getMessage)
                 .subscribe(m-> {
                     try {
-                        actionSelector(m.getEmailType(),m);
+                        System.out.println(m.toString());
+                        System.out.println(actionSelector(m.getEmailType(),m));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 });
     }
-    private String actionSelector(String type,EmailServiceMessage m) throws IOException {
+    private String actionSelector(EmailType type,EmailServiceMessage m) throws IOException {
         switch(type){
-            case "Signed up"-> {emailSender.send(SendgridMail.forSignedUp().mailProperties(mailProperties).mailHelper(mailHelper).email(m).build().getMail()); return "sent";}
-            case "added to team" -> throw new IOException();
+            case SIGNUP-> {emailSender.send(SendgridMail.forSignedUp().mailProperties(mailProperties).mailHelper(mailHelper).email(m).build().getMail()); return "Sign up mail sent";}
+            case ADDED_TO_TEAM -> {emailSender.send(SendgridMail.forAddedToTeam().mailProperties(mailProperties).mailHelper(mailHelper).email(m).build().getMail()); return "Added to team sent";}
             default -> {
                 return "failed";
             }

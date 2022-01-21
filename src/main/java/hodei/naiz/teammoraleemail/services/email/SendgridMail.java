@@ -18,27 +18,41 @@ import java.util.List;
  * Project: TeamMoraleEmail
  * Copyright: MIT
  */
-//@AllArgsConstructor
+
 @Data
 public class SendgridMail {
     private MailProperties mailProperties;
     private MailHelper mailHelper;
     private Mail mail;
-    @Builder(builderMethodName = "forSignedUp")
+
+    @Builder(builderMethodName = "forSignedUp",builderClassName = "ForSignedUp")
     public static SendgridMail signedUp(EmailServiceMessage email,MailProperties mailProperties,MailHelper mailHelper) {
         SendgridMail sendgridMail=new SendgridMail();
         sendgridMail.mail=new Mail();
         sendgridMail.mail.setFrom(mailProperties.getFromEmail());
 
-        //for signup//
         sendgridMail.mail.setTemplateId(mailProperties.getTemplateSignup());
-
-
-        sendgridMail.mail.setSubject("this is the subject");
         mailHelper.addDynamicTemplateData("username",email.getUsername());
         mailHelper.addDynamicTemplateData("content",email.getMessage());
         mailHelper.addDynamicTemplateData("subject","welcome "+ email.getUsername());
-        mailHelper.addDynamicTemplateData("confirmationUrl", mailProperties.getClientBaserUrl()+email.getConfirmationToken());
+        mailHelper.addDynamicTemplateData("confirmationUrl", mailProperties.getClientBaserUrl()+"/confirmAccount/token="+email.getConfirmationToken());
+        sendgridMail.mail.addPersonalization( mailHelper.withTos(List.of(new Email(email.getTo()))));
+
+        return sendgridMail;
+
+    }
+    @Builder(builderMethodName = "forAddedToTeam")
+    public static SendgridMail addedToTeam(EmailServiceMessage email,MailProperties mailProperties,MailHelper mailHelper) {
+        SendgridMail sendgridMail=new SendgridMail();
+        sendgridMail.mail=new Mail();
+        sendgridMail.mail.setFrom(mailProperties.getFromEmail());
+
+        sendgridMail.mail.setTemplateId(mailProperties.getTemplateAddedToTeam());
+        mailHelper.addDynamicTemplateData("username",email.getUsername());
+        mailHelper.addDynamicTemplateData("content",email.getMessage());
+        mailHelper.addDynamicTemplateData("subject","welcome "+ email.getUsername() + " to " + email.getTeamName());
+        mailHelper.addDynamicTemplateData("web_link", mailProperties.getClientBaserUrl());
+        mailHelper.addDynamicTemplateData("team_name",email.getTeamName());
         sendgridMail.mail.addPersonalization( mailHelper.withTos(List.of(new Email(email.getTo()))));
 
         return sendgridMail;

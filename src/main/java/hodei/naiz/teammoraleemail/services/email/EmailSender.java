@@ -24,9 +24,7 @@ import java.io.IOException;
     public class EmailSender {
 
         private final MailProperties mailProperties;
-
-
-
+        
         public String send(Mail mail) throws IOException {
             Request req=new Request();
             req.setMethod(Method.POST);

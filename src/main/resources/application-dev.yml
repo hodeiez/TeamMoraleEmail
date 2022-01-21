@@ -4,6 +4,7 @@ twillio:
   from: ${TWILLIO_FROM_EMAIL}
   templates:
     signup: ${TWILLIO_TEMPLATE_1}
+    added_to_team: ${TWILLIO_TEMPLATE_2}
 spring:
   redis:
     host: ${REDIS_HOST}

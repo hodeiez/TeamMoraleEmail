@@ -21,6 +21,8 @@ public class MailProperties {
     private SendGrid sendGrid;
     @Value("${twillio.templates.signup}")
     private String templateSignup;
+    @Value("${twillio.templates.added_to_team}")
+    private String templateAddedToTeam;
     @Value("${client.base.url}")
     private String clientBaserUrl;
 
@@ -35,5 +37,6 @@ public class MailProperties {
         return new SendGrid(apiKey);
     }
     public String getTemplateSignup(){return templateSignup;}
+    public String getTemplateAddedToTeam(){return templateAddedToTeam;}
     public String getClientBaserUrl(){return clientBaserUrl;}
 }
