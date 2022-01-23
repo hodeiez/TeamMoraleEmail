@@ -58,6 +58,23 @@ public class SendgridMail {
         return sendgridMail;
 
     }
+    @Builder(builderMethodName = "forForgotPass")
+    public static SendgridMail forgotPass(EmailServiceMessage email,MailProperties mailProperties,MailHelper mailHelper) {
+        SendgridMail sendgridMail=new SendgridMail();
+        sendgridMail.mail=new Mail();
+        sendgridMail.mail.setFrom(mailProperties.getFromEmail());
+
+        sendgridMail.mail.setTemplateId(mailProperties.getTemplateAddedToTeam());
+        mailHelper.addDynamicTemplateData("username",email.getUsername());
+        mailHelper.addDynamicTemplateData("content",email.getMessage());
+        mailHelper.addDynamicTemplateData("subject","Hi "+ email.getUsername() + " looks like you forgot your password");
+        mailHelper.addDynamicTemplateData("web_link",  mailProperties.getClientBaserUrl()+"/forgotPass/token="+email.getConfirmationToken());
+
+        sendgridMail.mail.addPersonalization( mailHelper.withTos(List.of(new Email(email.getTo()))));
+
+        return sendgridMail;
+
+    }
 
 
 }

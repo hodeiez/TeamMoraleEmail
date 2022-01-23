@@ -60,6 +60,8 @@ public class SubscriberService {
         switch(type){
             case SIGNUP-> {emailSender.send(SendgridMail.forSignedUp().mailProperties(mailProperties).mailHelper(mailHelper).email(m).build().getMail()).subscribe(); return "Sign up mail sent";}
             case ADDED_TO_TEAM -> {emailSender.send(SendgridMail.forAddedToTeam().mailProperties(mailProperties).mailHelper(mailHelper).email(m).build().getMail()).subscribe(); return "Added to team sent";}
+            case FORGOT_PASS -> {emailSender.send(SendgridMail.forForgotPass().mailProperties(mailProperties).mailHelper(mailHelper).email(m).build().getMail()).subscribe(); return "Sent to forgot pass";}
+
             default -> {
                 return "failed";
             }
