@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * Created by Hodei Eceiza
@@ -28,4 +29,5 @@ public class PubSubConfiguration {
                 .build();
         return new ReactiveRedisTemplate<>(lettuceConnectionFactory, serializationContext);
     }
+
 }

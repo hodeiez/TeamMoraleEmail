@@ -58,8 +58,8 @@ public class SubscriberService {
     }
     private String actionSelector(EmailType type,EmailServiceMessage m) throws IOException {
         switch(type){
-            case SIGNUP-> {emailSender.send(SendgridMail.forSignedUp().mailProperties(mailProperties).mailHelper(mailHelper).email(m).build().getMail()); return "Sign up mail sent";}
-            case ADDED_TO_TEAM -> {emailSender.send(SendgridMail.forAddedToTeam().mailProperties(mailProperties).mailHelper(mailHelper).email(m).build().getMail()); return "Added to team sent";}
+            case SIGNUP-> {emailSender.send(SendgridMail.forSignedUp().mailProperties(mailProperties).mailHelper(mailHelper).email(m).build().getMail()).subscribe(); return "Sign up mail sent";}
+            case ADDED_TO_TEAM -> {emailSender.send(SendgridMail.forAddedToTeam().mailProperties(mailProperties).mailHelper(mailHelper).email(m).build().getMail()).subscribe(); return "Added to team sent";}
             default -> {
                 return "failed";
             }

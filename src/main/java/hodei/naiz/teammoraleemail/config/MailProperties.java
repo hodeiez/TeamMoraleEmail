@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 public class MailProperties {
     @Value("${twillio.api.key}")
     private String apiKey;
+    @Value("${twillio.api.baseurl}")
+    private String baseUrl;
     @Value("${twillio.from}")
     private String fromEmail;
     private SendGrid sendGrid;
@@ -39,4 +41,5 @@ public class MailProperties {
     public String getTemplateSignup(){return templateSignup;}
     public String getTemplateAddedToTeam(){return templateAddedToTeam;}
     public String getClientBaserUrl(){return clientBaserUrl;}
+    public String getSendgridBaserUrl(){return baseUrl;}
 }

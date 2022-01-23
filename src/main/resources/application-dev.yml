@@ -1,6 +1,7 @@
 twillio:
   api:
     key: ${TWILLIO_API_KEY}
+    baseurl: ${TWILLIO_BASE_URL}
   from: ${TWILLIO_FROM_EMAIL}
   templates:
     signup: ${TWILLIO_TEMPLATE_1}
