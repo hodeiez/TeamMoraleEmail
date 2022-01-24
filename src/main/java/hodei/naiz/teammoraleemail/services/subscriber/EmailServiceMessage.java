@@ -49,6 +49,7 @@ public class EmailServiceMessage {
         emailService.username = username;
         emailService.emailType = emailType;
         emailService.message = message;
+        emailService.confirmationToken=confirmationToken;
         return emailService;
 
     }

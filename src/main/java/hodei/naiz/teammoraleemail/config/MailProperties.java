@@ -25,6 +25,8 @@ public class MailProperties {
     private String templateSignup;
     @Value("${twillio.templates.added_to_team}")
     private String templateAddedToTeam;
+    @Value("${twillio.templates.forgot_pass}")
+    private String templateForgotPass;
     @Value("${client.base.url}")
     private String clientBaserUrl;
 
@@ -42,4 +44,8 @@ public class MailProperties {
     public String getTemplateAddedToTeam(){return templateAddedToTeam;}
     public String getClientBaserUrl(){return clientBaserUrl;}
     public String getSendgridBaserUrl(){return baseUrl;}
+
+    public String getTemplateForgotPass() {
+        return templateForgotPass;
+    }
 }

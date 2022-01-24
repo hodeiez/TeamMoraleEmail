@@ -6,6 +6,7 @@ twillio:
   templates:
     signup: ${TWILLIO_TEMPLATE_1}
     added_to_team: ${TWILLIO_TEMPLATE_2}
+    forgot_pass: ${TWILLIO_TEMPLATE_3}
 spring:
   redis:
     host: ${REDIS_HOST}
