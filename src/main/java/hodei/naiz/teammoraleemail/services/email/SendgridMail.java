@@ -35,7 +35,7 @@ public class SendgridMail {
         mailHelper.addDynamicTemplateData("username",email.getUsername());
         mailHelper.addDynamicTemplateData("content",email.getMessage());
         mailHelper.addDynamicTemplateData("subject","welcome "+ email.getUsername());
-        mailHelper.addDynamicTemplateData("confirmationUrl", mailProperties.getClientBaserUrl()+"/confirmAccount/token="+email.getConfirmationToken());
+        mailHelper.addDynamicTemplateData("confirmationUrl", mailProperties.getClientBaserUrl()+"confirmAccount?token="+email.getConfirmationToken());
         sendgridMail.mail.addPersonalization( mailHelper.withTos(List.of(new Email(email.getTo()))));
 
         return sendgridMail;
